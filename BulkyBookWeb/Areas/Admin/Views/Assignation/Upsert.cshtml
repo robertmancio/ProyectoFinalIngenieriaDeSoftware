@@ -1,0 +1,54 @@
+﻿@using BulkyBook.Models.ViewModels
+@model AssignationVM
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input asp-for="Assignation.Id" hidden/>
+        <div class="row">
+            <div class="col-10">
+                    <div class="border p-4 mt-4 row">
+       <div class="col-12 pb-2">
+           <h2 class="text-primary">@(Model.Assignation.Id!=0?"Update":"Create") Asignaciones</h2>
+           <hr />
+       </div>
+      @* <div asp-validation-summary="All"></div>*@
+
+         <div class="mb-3 col-6">
+           <label asp-for="Assignation.RequestId">Solicitud</label>
+           <select asp-for="Assignation.RequestId" asp-items="@Model.RequestList" class="form-select">
+               <option disabled selected>--Seleccione Solicitud--</option>
+           </select>
+           <span asp-validation-for="Assignation.RequestId" class="text-danger"></span>
+       </div>
+         <div class="mb-3 col-6">
+           <label asp-for="Assignation.ApplicationUserId">Requerimiento</label>
+           <select asp-for="Assignation.ApplicationUserId" asp-items="@Model.ApplicationUserList" class="form-select">
+               <option disabled selected>--Seleccione Técnico--</option>
+           </select>
+           <span asp-validation-for="Assignation.ApplicationUserId" class="text-danger"></span>
+       </div>
+
+       <div class="col-12">
+
+        @if (Model.Assignation.Id != 0)
+        {
+            <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+        }
+        else
+        {
+            <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+        }
+
+       <a asp-controller="Request" asp-action="Index" class="btn btn-secondary" style="width:150px" >
+           Back to List
+       </a>
+    </div>
+    </div>
+    </div>
+    </form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}
+
